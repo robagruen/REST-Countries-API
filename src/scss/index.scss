@@ -1,3 +1,13 @@
-@import '_variables';
-@import '_reset';
-@import '_global';
+// Imports
+@import "_reset";
+@import "_variables";
+
+// Bulma imports
+@import "../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../node_modules/bulma/sass/base/_all.sass";
+@import "../../node_modules/bulma/sass/helpers/_all.sass";
+@import "../../node_modules/bulma/sass/elements/container.sass";
+@import "../../node_modules/bulma/sass/layout/section.sass";
+
+// App styles
+@import "_global";
