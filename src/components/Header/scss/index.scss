@@ -11,10 +11,7 @@
   &-toggle {
     margin-left: auto;
     &-label {
-      &::before {
-        content: "🌙";
-        display: inline;
-      }
+      cursor: pointer;
     }
     &-input {
       @include elementInvisible;
@@ -27,13 +24,5 @@
     background: $bgDark;
     color: $white;
     border-bottom-color: $darkBorder;
-    &-toggle {
-      &-label {
-        content: "☀️";
-      }
-      &-input {
-
-      }
-    }
   }
 }
