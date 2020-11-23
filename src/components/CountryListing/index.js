@@ -1,8 +1,36 @@
 import './css/index.css';
 
-import { Link } from "react-router-dom";
+import CountryCard from '../CountryCard/index.js';
+
+import { useEffect } from 'react';
 
 function CountryListing() {
+
+  let countryResults = [
+    {
+      name: 'RobLand',
+      population: '7',
+      region: 'NA',
+      capital: 'Cincinnati',
+      countryID: '7',
+    },
+    {
+      name: 'RobLand',
+      population: '8',
+      region: 'NA',
+      capital: 'Cincinnati',
+      countryID: '7',
+    },
+  ];
+
+  useEffect( () => {   
+    fetch('https://restcountries.eu/rest/v2/region/europe')
+      .then(results => results.json())
+      .then(data => {
+        console.log(data)
+        countryResults = data;
+      });  
+  });
 
   return (
     <div className="country-listing">
@@ -21,23 +49,13 @@ function CountryListing() {
           </form>
         </div>
         <div className="columns is-multiline is-mobile">
-          <div className="column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
-            {/* is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd */}
-            <h1>Country Listing</h1>
-            <Link to="/country">See Country</Link>
-          </div>
-          <div className="column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
-            <h1>Country Listing</h1>
-            <Link to="/country">See Country</Link>
-          </div>
-          <div className="column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
-            <h1>Country Listing</h1>
-            <Link to="/country">See Country</Link>
-          </div>
-          <div className="column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
-            <h1>Country Listing</h1>
-            <Link to="/country">See Country</Link>
-          </div>
+          {countryResults.map(countryResults => (
+            <CountryCard />
+          ))}
+          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
+          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
+          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
+          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
         </div>
       </div>
     </div>
