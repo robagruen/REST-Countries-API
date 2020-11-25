@@ -2,60 +2,53 @@ import './css/index.css';
 
 import CountryCard from '../CountryCard/index.js';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function CountryListing() {
-
-  let countryResults = [
-    {
-      name: 'RobLand',
-      population: '7',
-      region: 'NA',
-      capital: 'Cincinnati',
-      countryID: '7',
-    },
-    {
-      name: 'RobLand',
-      population: '8',
-      region: 'NA',
-      capital: 'Cincinnati',
-      countryID: '7',
-    },
-  ];
+  const baseApiRoute = 'https://restcountries.eu/rest/v2/';
+  const [countryResults, setCountryResults] = useState([]);
+  const [apiRoute, setApiRoute] = useState( baseApiRoute + 'all' );
 
   useEffect( () => {   
-    fetch('https://restcountries.eu/rest/v2/region/europe')
+    fetch(apiRoute)
       .then(results => results.json())
       .then(data => {
-        console.log(data)
-        countryResults = data;
+        setCountryResults(data);
       });  
   });
+
+  function searchByCountryName() {
+    let name = document.getElementById("name-input").value;
+    let apiRoute = baseApiRoute + 'name/' + name;
+    setApiRoute( String(apiRoute) );
+  }
+
+  function searchByCountryRegion() {
+    let region = document.getElementById("region-select").value;
+    let apiRoute = baseApiRoute + 'region/' + region;
+    setApiRoute( String(apiRoute) );
+  }
 
   return (
     <div className="country-listing">
       <div className="container is-fluid">
         <div>
           <form className="country-listing-form">
-            <input type="text" />
-            <select>
+            <input id="name-input" type="text" oninput={ searchByCountryName } />
+            <select id="region-select" onChange={ searchByCountryRegion }>
               <option>Filter by Region</option>
-              <option>Africa</option>
-              <option>America</option>
-              <option>Asia</option>
-              <option>Europe</option>
-              <option>Oceania</option>
+              <option value="africa">Africa</option>
+              <option value="america">America</option>
+              <option value="asia">Asia</option>
+              <option value="europe">Europe</option>
+              <option value="oceania">Oceania</option>
             </select>
           </form>
         </div>
         <div className="columns is-multiline is-mobile">
           {countryResults.map(countryResults => (
-            <CountryCard />
+            <CountryCard name={ countryResults.name } population={ countryResults.population } region={ countryResults.region } capital={ countryResults.capital } countryID={ countryResults.countryID } image={ countryResults.flag } />
           ))}
-          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
-          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
-          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
-          <CountryCard name="RobLand" population="7" region="NA" capital="Cincinnati" countryID="7" />
         </div>
       </div>
     </div>
