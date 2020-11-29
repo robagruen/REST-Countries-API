@@ -17,8 +17,12 @@ function CountryListing() {
       });  
   });
 
-  function searchByCountryName() {
-    let name = document.getElementById("name-input").value;
+  function disableFormSubmit(event) {
+    event.preventDefault();
+  }
+
+  function searchByCountryName(event) {
+    let name = event.target.value;
     let apiRoute = baseApiRoute + 'name/' + name;
     setApiRoute( String(apiRoute) );
   }
@@ -29,14 +33,18 @@ function CountryListing() {
     setApiRoute( String(apiRoute) );
   }
 
+  function displayCountryCards() {
+    
+  }
+
   return (
     <div className="country-listing">
       <div className="container is-fluid">
         <div>
-          <form className="country-listing-form">
-            <input id="name-input" type="text" oninput={ searchByCountryName } />
+          <form className="country-listing-form" onSubmit={ disableFormSubmit }>
+            <input id="name-input" type="text" onInput={ searchByCountryName } placeholder="Search for a country..." />
             <select id="region-select" onChange={ searchByCountryRegion }>
-              <option>Filter by Region</option>
+              <option selected disabled>Filter by Region</option>
               <option value="africa">Africa</option>
               <option value="america">America</option>
               <option value="asia">Asia</option>
@@ -46,8 +54,10 @@ function CountryListing() {
           </form>
         </div>
         <div className="columns is-multiline is-mobile">
-          {countryResults.map(countryResults => (
-            <CountryCard name={ countryResults.name } population={ countryResults.population } region={ countryResults.region } capital={ countryResults.capital } countryID={ countryResults.countryID } image={ countryResults.flag } />
+          {countryResults.map(country => (
+            countryResults.length > 0
+              ? <CountryCard name={ country.name } population={ country.population } region={ country.region } capital={ country.capital } countryID={ country.countryID } image={ country.flag } />
+              : <p>There were no results found.</p>
           ))}
         </div>
       </div>

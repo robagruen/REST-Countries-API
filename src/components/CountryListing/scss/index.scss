@@ -1,2 +1,16 @@
 @import '../../../scss/variables';
 @import '../../../scss/mixins';
+
+.country-listing {
+    &-form {
+        display: flex;
+        padding: 40px 0;
+        flex-direction: row;
+        #name-input {
+
+        }
+        #region-select {
+            margin-left: auto;
+        }
+    }
+}
